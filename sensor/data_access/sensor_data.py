@@ -10,7 +10,7 @@ from sensor.exception import SensorException
 
 class SensorData:
     """
-    This class is responsible for fetching data from MongoDB
+    This class is responsible for exporting data from mongodb record as dataframe
     """
     
     def __init__(self):
