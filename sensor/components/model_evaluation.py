@@ -26,12 +26,8 @@ class ModelEvaluation:
 
     def initiate_model_evaluation(self) -> ModelEvaluationArtifact:
         try:
-            valid_train_file_path = self.data_validation_artifact.valid_train_file_path
-            valid_test_file_path = self.data_validation_artifact.valid_test_file_path
-
-            #valid train and test file dataframe
-            train_df = pd.read_csv(valid_train_file_path)
-            test_df = pd.read_csv(valid_test_file_path)
+            train_df = pd.read_csv(self.data_validation_artifact.train_file_path)
+            test_df = pd.read_csv(self.data_validation_artifact.test_file_path)
 
             df = pd.concat([train_df,test_df])
             y_true = df[TARGET_COLUMN]
@@ -66,7 +62,6 @@ class ModelEvaluation:
 
             improved_accuracy = trained_metric.f1_score-latest_metric.f1_score
             if self.model_eval_config.change_threshold < improved_accuracy:
-                #0.02 < 0.03
                 is_model_accepted=True
             else:
                 is_model_accepted=False
@@ -82,7 +77,6 @@ class ModelEvaluation:
 
             model_eval_report = model_evaluation_artifact.__dict__
 
-            #save the report
             write_yaml_file(self.model_eval_config.report_file_path, model_eval_report)
             logging.info(f"Model evaluation artifact: {model_evaluation_artifact}")
             return model_evaluation_artifact
