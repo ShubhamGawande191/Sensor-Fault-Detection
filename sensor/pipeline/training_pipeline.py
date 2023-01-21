@@ -1,4 +1,4 @@
-import sys, os
+import sys
 from sensor.logger import logging
 from sensor.exception import SensorException
 from sensor.components.data_validation import DataValidation
@@ -8,10 +8,10 @@ from sensor.components.model_evaluation import ModelEvaluation
 from sensor.components.model_pusher import ModelPusher
 from sensor.components.data_ingestion import DataIngestion
 from sensor.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig
-from sensor.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
-from sensor.entity.artifact_entity import ModelTrainerArtifact, ModelEvaluationArtifact, ModelPusherArtifact
+from sensor.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact
+from sensor.entity.artifact_entity import ModelTrainerArtifact, ModelEvaluationArtifact
 from sensor.entity.config_entity import ModelPusherConfig, ModelEvaluatorConfig, ModelTrainerConfig
-from sensor.entity.config_entity import DataValidationConfig
+from sensor.entity.config_entity import DataValidationConfig, DataTransformationConfig
 from sensor.cloud_storage.s3_syncer import S3Sync
 from sensor.constant.s3_bucket import TRAINING_BUCKET_NAME
 from sensor.constant.training_pipeline import SAVED_MODEL_DIR
@@ -62,8 +62,8 @@ class TrainPipeline:
         
     def start_model_evaluation(self, data_validation_artifact: DataValidationArtifact, model_trainer_artifact: ModelTrainerArtifact):
         try:
-            model_eval_config = ModelEvaluationConfig(self.training_pipeline_config)
-            model_eval = ModelEvaluation(model_trainer_config, data_transformation_artifact)
+            model_eval_config = ModelEvaluatorConfig(self.training_pipeline_config)
+            model_eval = ModelEvaluation(model_eval_config, data_validation_artifact, model_trainer_artifact)
             model_eval_artifact = model_eval.initiate_model_evaluation()
             return model_eval_artifact
         except Exception as e:
@@ -80,15 +80,15 @@ class TrainPipeline:
         
     def sync_artifact_dir_to_s3(self):
         try:
-            logging.info("Syncing artifact directory to s3")
-            logging.info("Syncing artifact directory to s3 completed")
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/artifact/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder = self.training_pipeline_config.artifact_dir, aws_bucket_url=aws_bucket_url)
         except Exception as e:
             raise SensorException(e, sys)
         
     def sync_saved_model_dir_to_s3(self):
         try:
-            logging.info("Syncing saved model directory to s3")
-            logging.info("Syncing saved model directory to s3 completed")
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/{SAVED_MODEL_DIR}"
+            self.s3_sync.sync_folder_to_s3(folder = SAVED_MODEL_DIR, aws_bucket_url=aws_bucket_url)
         except Exception as e:
             raise SensorException(e, sys)
         
@@ -107,4 +107,3 @@ class TrainPipeline:
         except Exception as e:
             TrainPipeline.is_pipeline_running = False
             raise SensorException(e, sys)
-        
