@@ -1,2 +1,18 @@
 pymongo[srv]==4.3.3
+dill==0.3.5.1
+xgboost==1.7.2
+imblearn==0.0
+fastapi==0.78.0
+pip-chill==1.0.1
+evidently==0.1.58.dev0
+httptools==0.5.0
+dnspython==2.2.1
+mypy-boto3==1.24.76
+python-dotenv==0.21.0
+uvicorn==0.18.3
+neuro-mf==0.0.5
+watchfiles==0.17.0
+websockets==10.3
+types-s3transfer==0.6.0.post3
+wincertstore==0.2
 -e .
