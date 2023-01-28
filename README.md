@@ -7,3 +7,31 @@ A well-maintained vehicle is one of the keys to saving money and time.
 
 One of the components that are critical to heavy vehicles is Air Pressure System (APS). 
 It generates pressurized air with the help of an air compressor driven by the engine to be used for various components such as braking, gear changing, etc.
+
+### **Tech Stack**
+```
+- Python
+- Machine Learning
+- FastAPI
+- Docker
+- MongoDB
+
+```
+
+### **Infrastructure**
+
+- AWS EC2
+- AWS S3
+- AWS ECR
+- Terraform
+- Github Actions
+
+### **How to run the project**
+```
+- To be updated
+```
+
+### **Documentation**
+```
+- To be updated (Project Architecture, Deployment Architecture etc.)
+```
