@@ -1,11 +1,6 @@
-from sensor.configuration.mongodb_connection import MongoDBClient
-from sensor.exception import SensorException
-import os,sys
-from sensor.logger import logging
-from sensor.pipeline import training_pipeline
-from sensor.pipeline.training_pipeline import TrainPipeline
 import os
-from sensor.utils.main_utils import read_yaml_file
+import pandas as pd
+from sensor.pipeline.training_pipeline import TrainPipeline
 from sensor.constant.training_pipeline import SAVED_MODEL_DIR
 from fastapi import FastAPI, File, UploadFile
 from sensor.constant.application import APP_HOST, APP_PORT
@@ -13,11 +8,9 @@ from starlette.responses import RedirectResponse
 from uvicorn import run as app_run
 from fastapi.responses import Response
 from sensor.ml.model.estimator import ModelResolver,TargetValueMapping
-from sensor.utils.main_utils import load_object
+from sensor.utils.main_utils import load_object, read_yaml_file
 from fastapi.middleware.cors import CORSMiddleware
-import os
-import pandas as pd
-
+from fastapi import Request
 
 env_file_path=os.path.join(os.getcwd(),"env.yaml")
 
@@ -26,7 +19,6 @@ def set_env_variable(env_file_path):
     if os.getenv('MONGO_DB_URL',None) is None:
         env_config = read_yaml_file(env_file_path)
         os.environ['MONGO_DB_URL']=env_config['MONGO_DB_URL']
-
 
 app = FastAPI()
 origins = ["*"]
