@@ -1,11 +1,10 @@
 import os, sys
-from sensor.logger import logging
 from sensor.exception import SensorException
 import shutil
 from sensor.utils.main_utils import write_yaml_file, save_object, load_object
 from sensor.ml.metric.classification_metric import get_classification_score
 from sensor.entity.artifact_entity import ModelPusherArtifact, ModelEvaluationArtifact, ModelTrainerArtifact
-from sensor.entity.config_entity import ModelPusherConfig, ModelEvaluatorConfig
+from sensor.entity.config_entity import ModelPusherConfig
 
 class ModelPusher:
 

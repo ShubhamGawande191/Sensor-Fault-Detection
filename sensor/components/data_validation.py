@@ -3,7 +3,6 @@ from sensor.logger import logging
 from sensor.exception import SensorException
 import pandas as pd
 from scipy.stats import ks_2samp
-from distutils import dir_util
 from sensor.constant.training_pipeline import SCHEMA_FILE_PATH
 from sensor.entity.artifact_entity import DataValidationArtifact, DataIngestionArtifact
 from sensor.entity.config_entity import DataValidationConfig

@@ -1,12 +1,12 @@
-import os, sys
+import sys
 import pandas as pd
 from sensor.logger import logging
 from sensor.exception import SensorException
-from sensor.utils.main_utils import write_yaml_file, save_object, load_object
+from sensor.utils.main_utils import write_yaml_file, load_object
 from sensor.constant.training_pipeline import TARGET_COLUMN
 from sensor.entity.artifact_entity import DataValidationArtifact, ModelEvaluationArtifact, ModelTrainerArtifact
 from sensor.entity.config_entity import ModelEvaluatorConfig
-from sensor.ml.model.estimator import SensorModel, ModelResolver, TargetValueMapping
+from sensor.ml.model.estimator import ModelResolver, TargetValueMapping
 from sensor.ml.metric.classification_metric import get_classification_score
 
 class ModelEvaluation:
