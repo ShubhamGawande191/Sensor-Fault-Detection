@@ -1,4 +1,4 @@
-import os, sys
+import sys
 from sensor.exception import SensorException
 from sensor.entity.artifact_entity import ClassificationMetricArtifact
 from sklearn.metrics import f1_score, precision_score, recall_score
