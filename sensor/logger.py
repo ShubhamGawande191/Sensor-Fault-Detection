@@ -11,4 +11,3 @@ logging.basicConfig(
     format="[%(asctime)s] %(lineno)d %(name)s %(levelname)s %(threadName)s : %(message)s",
     level=logging.INFO,
 )
-    
