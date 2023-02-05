@@ -1,11 +1,9 @@
 import sys
 from typing import Optional
-
 import pandas as pd
 import numpy as np
 import json
 from sensor.configuration.mongodb_connection import MongoDBClient
-from sensor.constant.database import DATABASE_NAME
 from sensor.exception import SensorException
 
 class SensorData:
